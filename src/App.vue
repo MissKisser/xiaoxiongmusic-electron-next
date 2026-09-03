@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import AuthModal from "@/components/modals/AuthModal.vue";
 import { useSettingsStore } from "@/stores/settings";
+
+/** 桌面端（Electron）才挂载授权弹窗 */
+const isDesktop = typeof window.api !== "undefined";
 
 watchEffect(() => {
   const v = useSettingsStore().appearance.fontFamily;
@@ -11,5 +15,6 @@ watchEffect(() => {
 
 <template>
   <AppBackground />
+  <AuthModal v-if="isDesktop" />
   <RouterView />
 </template>

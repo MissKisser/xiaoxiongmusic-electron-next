@@ -21,10 +21,22 @@
       "subtitle": "一个现代化的桌面音乐播放器，完成几步设置即可开始享用",
       "start": "开始设置",
       "features": {
-        "local": { "title": "本地音乐库", "desc": "扫描本地目录，自动整理音乐库" },
-        "quality": { "title": "无损音质", "desc": "原生音频引擎，支持多种无损格式" },
-        "streaming": { "title": "流媒体服务器", "desc": "Subsonic / Jellyfin / Emby 等" },
-        "lyrics": { "title": "丰富歌词体验", "desc": "AMLL 逐字歌词，桌面歌词、灵动岛、任务栏歌词" }
+        "local": {
+          "title": "本地音乐库",
+          "desc": "扫描本地目录，自动整理音乐库"
+        },
+        "quality": {
+          "title": "无损音质",
+          "desc": "原生音频引擎，支持多种无损格式"
+        },
+        "streaming": {
+          "title": "流媒体服务器",
+          "desc": "Subsonic / Jellyfin / Emby 等"
+        },
+        "lyrics": {
+          "title": "丰富歌词体验",
+          "desc": "AMLL 逐字歌词，桌面歌词、灵动岛、任务栏歌词"
+        }
       }
     },
     "agreement": {
@@ -1946,9 +1958,18 @@
         "homepage": "主页"
       },
       "grant": {
-        "network": { "label": "联网", "desc": "插件可发起网络请求" },
-        "control": { "label": "控制", "desc": "插件可控制播放器" },
-        "ui": { "label": "界面", "desc": "插件可扩展或修改应用界面" }
+        "network": {
+          "label": "联网",
+          "desc": "插件可发起网络请求"
+        },
+        "control": {
+          "label": "控制",
+          "desc": "插件可控制播放器"
+        },
+        "ui": {
+          "label": "界面",
+          "desc": "插件可扩展或修改应用界面"
+        }
       }
     },
     "pluginManager": {
@@ -2240,6 +2261,135 @@
       "trackNumber": "音轨号",
       "discNumber": "碟号",
       "lyrics": "内嵌歌词"
+    }
+  },
+  "auth": {
+    "checkFailed": "授权验证失败",
+    "codePlaceholder": "请输入授权码",
+    "description": "请输入授权码以继续使用本应用",
+    "networkError": "无法连接到服务器，请检查网络",
+    "success": "授权成功",
+    "title": "应用授权",
+    "verify": "验证授权",
+    "verifying": "验证中...",
+    "verifyFailed": "授权码验证失败"
+  },
+  "admin": {
+    "codes": {
+      "cancel": "取消",
+      "code": "授权码",
+      "confirmDeleteContent": "删除后不可恢复，确定删除该授权码吗？",
+      "confirmDeleteTitle": "确认删除",
+      "copied": "已复制授权码",
+      "copyFailed": "复制失败",
+      "count": "数量",
+      "delete": "删除",
+      "deleteFailed": "删除失败",
+      "deleteSuccess": "已删除",
+      "devices": "绑定设备",
+      "edit": "编辑",
+      "editTitle": "编辑授权码",
+      "empty": "暂无授权码",
+      "exportCopied": "已复制 {count} 个授权码",
+      "exportEmpty": "请先选择要导出的授权码",
+      "exportSelected": "导出选中 ({count})",
+      "generate": "生成",
+      "generateFailed": "生成失败",
+      "generateSuccess": "生成成功",
+      "invalidCount": "生成数量需在 1-1000 之间",
+      "lastActive": "最近活跃",
+      "lastIp": "最近 IP",
+      "loadFailed": "获取授权码列表失败",
+      "refresh": "刷新",
+      "remarks": "备注",
+      "remarksPlaceholder": "备注（可选）",
+      "save": "保存",
+      "saveFailed": "保存失败",
+      "saveSuccess": "已保存",
+      "search": "搜索授权码、备注或 IP",
+      "select": "选择",
+      "selected": "已选",
+      "status": "状态",
+      "statusActive": "已激活",
+      "statusDisabled": "已禁用",
+      "statusUnused": "未使用",
+      "tabAll": "全部",
+      "title": "授权码管理"
+    },
+    "dashboard": {
+      "activeCodes": "活跃授权码",
+      "empty": "暂无数据",
+      "loadFailed": "获取仪表盘数据失败",
+      "platformCount": "平台数量",
+      "recentActivity": "最近访问",
+      "refresh": "刷新",
+      "totalCodes": "授权码总数",
+      "yesterdayActive": "昨日在线"
+    },
+    "login": {
+      "failed": "无法连接到服务器",
+      "invalid": "账号或密码错误",
+      "password": "密码",
+      "requirePassword": "请输入密码",
+      "requireUsername": "请输入管理员账号",
+      "submit": "登录",
+      "subtitle": "管理控制台",
+      "title": "小熊音乐",
+      "username": "管理员账号"
+    },
+    "logout": "退出登录",
+    "logs": {
+      "actionDelete": "删除授权码",
+      "actionDeleteVersion": "删除版本",
+      "actionGenerate": "生成授权码",
+      "actionLogin": "登录",
+      "actionPublish": "发布版本",
+      "actionToggleAuth": "切换授权开关",
+      "actionUpdate": "更新授权码",
+      "authOff": "关闭",
+      "authOn": "开启",
+      "detailGenerate": "生成 {count} 个授权码{remarks}",
+      "empty": "暂无日志",
+      "forceFlag": " [强制]",
+      "loadFailed": "获取日志失败",
+      "refresh": "刷新",
+      "title": "操作日志",
+      "toggleDetail": "已{state} {client} 端授权"
+    },
+    "menu": {
+      "codes": "授权码",
+      "dashboard": "仪表盘",
+      "logs": "操作日志",
+      "versions": "版本管理"
+    },
+    "title": "小熊管理",
+    "versions": {
+      "cancel": "取消",
+      "confirmDeleteContent": "确定删除该版本记录吗？",
+      "confirmDeleteTitle": "确认删除",
+      "delete": "删除",
+      "deleteFailed": "删除失败",
+      "deleteSuccess": "已删除",
+      "description": "更新说明",
+      "descriptionPlaceholder": "Markdown 格式",
+      "downloadUrl": "下载链接",
+      "downloadUrlPlaceholder": "安装包下载地址",
+      "empty": "暂无版本",
+      "forceNo": "否",
+      "forceUpdate": "强制更新",
+      "forceYes": "是",
+      "historyTitle": "版本历史",
+      "loadFailed": "获取版本列表失败",
+      "platform": "平台",
+      "publish": "发布",
+      "publishFailed": "发布失败",
+      "publishSuccess": "发布成功",
+      "publishTitle": "发布新版本",
+      "refresh": "刷新",
+      "requireUrl": "请输入下载链接",
+      "requireVersion": "请输入版本号",
+      "version": "版本号",
+      "versionPlaceholder": "如 3.9"
     }
   }
 }

@@ -1958,9 +1958,18 @@
         "homepage": "Homepage"
       },
       "grant": {
-        "network": { "label": "Network", "desc": "Can make network requests" },
-        "control": { "label": "Control", "desc": "Can control the player" },
-        "ui": { "label": "Interface", "desc": "Can extend or modify the app interface" }
+        "network": {
+          "label": "Network",
+          "desc": "Can make network requests"
+        },
+        "control": {
+          "label": "Control",
+          "desc": "Can control the player"
+        },
+        "ui": {
+          "label": "Interface",
+          "desc": "Can extend or modify the app interface"
+        }
       }
     },
     "pluginManager": {
@@ -2252,6 +2261,135 @@
       "trackNumber": "Track No.",
       "discNumber": "Disc No.",
       "lyrics": "Embedded Lyrics"
+    }
+  },
+  "auth": {
+    "checkFailed": "Authorization check failed",
+    "codePlaceholder": "Enter license code",
+    "description": "Please enter your license code to continue",
+    "networkError": "Cannot reach the server, please check your network",
+    "success": "Authorized successfully",
+    "title": "App Authorization",
+    "verify": "Verify",
+    "verifying": "Verifying...",
+    "verifyFailed": "Invalid license code"
+  },
+  "admin": {
+    "codes": {
+      "cancel": "Cancel",
+      "code": "Code",
+      "confirmDeleteContent": "This cannot be undone. Delete this code?",
+      "confirmDeleteTitle": "Confirm deletion",
+      "copied": "Code copied",
+      "copyFailed": "Copy failed",
+      "count": "Count",
+      "delete": "Delete",
+      "deleteFailed": "Failed to delete",
+      "deleteSuccess": "Deleted",
+      "devices": "Devices",
+      "edit": "Edit",
+      "editTitle": "Edit code",
+      "empty": "No codes yet",
+      "exportCopied": "Copied {count} codes",
+      "exportEmpty": "Select codes to export first",
+      "exportSelected": "Export selected ({count})",
+      "generate": "Generate",
+      "generateFailed": "Failed to generate",
+      "generateSuccess": "Generated successfully",
+      "invalidCount": "Count must be between 1 and 1000",
+      "lastActive": "Last active",
+      "lastIp": "Last IP",
+      "loadFailed": "Failed to load codes",
+      "refresh": "Refresh",
+      "remarks": "Remarks",
+      "remarksPlaceholder": "Remarks (optional)",
+      "save": "Save",
+      "saveFailed": "Failed to save",
+      "saveSuccess": "Saved",
+      "search": "Search code, remarks or IP",
+      "select": "Select",
+      "selected": "Selected",
+      "status": "Status",
+      "statusActive": "Active",
+      "statusDisabled": "Disabled",
+      "statusUnused": "Unused",
+      "tabAll": "All",
+      "title": "Auth codes"
+    },
+    "dashboard": {
+      "activeCodes": "Active codes",
+      "empty": "No data yet",
+      "loadFailed": "Failed to load dashboard",
+      "platformCount": "Platforms",
+      "recentActivity": "Recent activity",
+      "refresh": "Refresh",
+      "totalCodes": "Total codes",
+      "yesterdayActive": "Active yesterday"
+    },
+    "login": {
+      "failed": "Unable to reach the server",
+      "invalid": "Incorrect username or password",
+      "password": "Password",
+      "requirePassword": "Please enter your password",
+      "requireUsername": "Please enter your username",
+      "submit": "Sign in",
+      "subtitle": "Admin console",
+      "title": "Xiaoxiong Music",
+      "username": "Username"
+    },
+    "logout": "Log out",
+    "logs": {
+      "actionDelete": "Delete code",
+      "actionDeleteVersion": "Delete version",
+      "actionGenerate": "Generate codes",
+      "actionLogin": "Login",
+      "actionPublish": "Publish version",
+      "actionToggleAuth": "Toggle auth",
+      "actionUpdate": "Update code",
+      "authOff": "disabled",
+      "authOn": "enabled",
+      "detailGenerate": "Generated {count} codes{remarks}",
+      "empty": "No logs yet",
+      "forceFlag": " [forced]",
+      "loadFailed": "Failed to load logs",
+      "refresh": "Refresh",
+      "title": "Audit logs",
+      "toggleDetail": "{client} auth {state}"
+    },
+    "menu": {
+      "codes": "Auth codes",
+      "dashboard": "Dashboard",
+      "logs": "Logs",
+      "versions": "Versions"
+    },
+    "title": "Xiaoxiong Admin",
+    "versions": {
+      "cancel": "Cancel",
+      "confirmDeleteContent": "Delete this version record?",
+      "confirmDeleteTitle": "Confirm deletion",
+      "delete": "Delete",
+      "deleteFailed": "Failed to delete",
+      "deleteSuccess": "Deleted",
+      "description": "Changelog",
+      "descriptionPlaceholder": "Markdown format",
+      "downloadUrl": "Download URL",
+      "downloadUrlPlaceholder": "Package download URL",
+      "empty": "No versions yet",
+      "forceNo": "No",
+      "forceUpdate": "Force update",
+      "forceYes": "Yes",
+      "historyTitle": "Version history",
+      "loadFailed": "Failed to load versions",
+      "platform": "Platform",
+      "publish": "Publish",
+      "publishFailed": "Failed to publish",
+      "publishSuccess": "Published successfully",
+      "publishTitle": "Publish new version",
+      "refresh": "Refresh",
+      "requireUrl": "Please enter a download URL",
+      "requireVersion": "Please enter a version",
+      "version": "Version",
+      "versionPlaceholder": "e.g. 3.9"
     }
   }
 }

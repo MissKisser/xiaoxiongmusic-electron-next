@@ -6,6 +6,7 @@ import App from "./App.vue";
 import router from "./router";
 import i18n from "./i18n";
 
+import { useAuthStore } from "./stores/auth";
 import { useThemeStore } from "./stores/theme";
 import { useSettingsStore } from "./stores/settings";
 import { useHotkeyStore } from "./stores/hotkey";
@@ -87,6 +88,12 @@ router.isReady().then(() => {
   }
   // 初始化播放器与冷启动分发
   bootstrapPlayback().catch(console.error);
+  // 桌面端：启动时校验云端授权，失败仅记日志不阻断启动
+  if (typeof window.api !== "undefined") {
+    useAuthStore()
+      .checkAuth()
+      .catch((err) => console.error("[auth] check failed", err));
+  }
   // 初始化快捷键
   useHotkeyStore()
     .init()

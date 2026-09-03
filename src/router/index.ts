@@ -121,6 +121,46 @@ const router = createRouter({
         },
       ],
     },
+    // 管理后台（隐藏入口）：无 admin_token 时跳登录页并携带 redirect
+    {
+      path: "/bamger/login",
+      name: "admin-login",
+      component: () => import("@/pages/Admin/Login.vue"),
+    },
+    {
+      path: "/bamger",
+      component: () => import("@/pages/Admin/Layout.vue"),
+      redirect: "/bamger/dashboard",
+      beforeEnter: (to, _from, next) => {
+        if (!localStorage.getItem("admin_token")) {
+          next({ name: "admin-login", query: { redirect: to.fullPath } });
+        } else {
+          next();
+        }
+      },
+      children: [
+        {
+          path: "dashboard",
+          name: "admin-dashboard",
+          component: () => import("@/pages/Admin/Dashboard.vue"),
+        },
+        {
+          path: "codes",
+          name: "admin-codes",
+          component: () => import("@/pages/Admin/Codes.vue"),
+        },
+        {
+          path: "versions",
+          name: "admin-versions",
+          component: () => import("@/pages/Admin/Versions.vue"),
+        },
+        {
+          path: "logs",
+          name: "admin-logs",
+          component: () => import("@/pages/Admin/Logs.vue"),
+        },
+      ],
+    },
   ],
 });
 
