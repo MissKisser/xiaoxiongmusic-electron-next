@@ -177,7 +177,7 @@ const config: Configuration = {
   publish: {
     provider: "github",
     owner: "MissKisser",
-    repo: "xiaoxiongmusic-electron",
+    repo: "xiaoxiongmusic-electron-next",
     channel: updateChannel,
   },
 };

@@ -9,15 +9,15 @@
   "main": "./out/main/index.js",
   "author": {
     "name": "Hackerdallas",
-    "url": "https://github.com/MissKisser/xiaoxiongmusic-electron"
+    "url": "https://github.com/MissKisser/xiaoxiongmusic-electron-next"
   },
-  "homepage": "https://github.com/MissKisser/xiaoxiongmusic-electron",
+  "homepage": "https://github.com/MissKisser/xiaoxiongmusic-electron-next",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MissKisser/xiaoxiongmusic-electron"
+    "url": "https://github.com/MissKisser/xiaoxiongmusic-electron-next"
   },
   "bugs": {
-    "url": "https://github.com/MissKisser/xiaoxiongmusic-electron/issues"
+    "url": "https://github.com/MissKisser/xiaoxiongmusic-electron-next/issues"
   },
   "license": "AGPL-3.0",
   "license-file": "LICENSE",

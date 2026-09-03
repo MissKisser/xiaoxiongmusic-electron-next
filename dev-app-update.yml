@@ -1,4 +1,4 @@
 provider: github
 owner: MissKisser
-repo: xiaoxiongmusic-electron
+repo: xiaoxiongmusic-electron-next
 updaterCacheDirName: xiaoxiongmusic-updater

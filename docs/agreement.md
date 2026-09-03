@@ -49,7 +49,7 @@
 
   3.3 **网络远程交互条款（AGPL 核心）**：若您修改本软件，并通过计算机网络向第三方提供与之交互的服务（包括但不限于 Web、API 或远程访问），您必须依据 AGPL-3.0 第 13 条向该等用户提供您所运行版本的完整对应源代码。
 
-  3.4 本软件官方源代码托管地址为：<https://github.com/MissKisser/xiaoxiongmusic-electron>；基线项目地址为 <https://github.com/SPlayer-Dev/SPlayer-Next>。
+  3.4 本软件官方源代码托管地址为：<https://github.com/MissKisser/xiaoxiongmusic-electron-next>；基线项目地址为 <https://github.com/SPlayer-Dev/SPlayer-Next>。
 
   3.5 本协议用于说明软件功能、第三方服务风险、商标与适用法律等事项，不限制 AGPL-3.0 已授予的权利。当本协议与 AGPL-3.0 存在冲突时，**以 AGPL-3.0 为准**。
 
@@ -165,7 +165,7 @@
 
 ## 十、官方分发渠道与安全风险
 
-10.1 **官方渠道**：本软件的官方版本信息与原始安装包发布于 GitHub 仓库 <https://github.com/MissKisser/xiaoxiongmusic-electron>。
+10.1 **官方渠道**：本软件的官方版本信息与原始安装包发布于 GitHub 仓库 <https://github.com/MissKisser/xiaoxiongmusic-electron-next>。
 
 10.2 **第三方线路与再分发**：官方网站可能提供第三方下载加速线路，它们仅代理 GitHub 上的官方资源，请求会经过相应第三方服务。除此之外，第三方网站、网盘、应用商店、论坛或个人提供的转载、重新打包或再分发均不受开发者控制，**不构成官方发布行为**。
 
@@ -251,8 +251,8 @@
 
 如对本协议有任何疑问、意见或需要反馈问题，您可通过以下方式联系：
 
-- **GitHub 仓库**：<https://github.com/MissKisser/xiaoxiongmusic-electron>
-- **问题反馈**：<https://github.com/MissKisser/xiaoxiongmusic-electron/issues>
+- **GitHub 仓库**：<https://github.com/MissKisser/xiaoxiongmusic-electron-next>
+- **问题反馈**：<https://github.com/MissKisser/xiaoxiongmusic-electron-next/issues>
 
 ---
 

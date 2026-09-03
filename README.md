@@ -8,10 +8,10 @@
 
 <p>基于 <a href="https://github.com/SPlayer-Dev/SPlayer-Next">SPlayer-Next</a> 重定型的 v4 主线，内置解锁服务与授权管理。</p>
 
-[![Stars](https://img.shields.io/github/stars/MissKisser/xiaoxiongmusic-electron?style=flat)](https://github.com/MissKisser/xiaoxiongmusic-electron/stargazers)
-[![Release](https://img.shields.io/github/v/release/MissKisser/xiaoxiongmusic-electron)](https://github.com/MissKisser/xiaoxiongmusic-electron/releases)
-[![License](https://img.shields.io/github/license/MissKisser/xiaoxiongmusic-electron)](https://github.com/MissKisser/xiaoxiongmusic-electron/blob/main/LICENSE)
-[![Issues](https://img.shields.io/github/issues/MissKisser/xiaoxiongmusic-electron)](https://github.com/MissKisser/xiaoxiongmusic-electron/issues)
+[![Stars](https://img.shields.io/github/stars/MissKisser/xiaoxiongmusic-electron-next?style=flat)](https://github.com/MissKisser/xiaoxiongmusic-electron-next/stargazers)
+[![Release](https://img.shields.io/github/v/release/MissKisser/xiaoxiongmusic-electron-next)](https://github.com/MissKisser/xiaoxiongmusic-electron-next/releases)
+[![License](https://img.shields.io/github/license/MissKisser/xiaoxiongmusic-electron-next)](https://github.com/MissKisser/xiaoxiongmusic-electron-next/blob/main/LICENSE)
+[![Issues](https://img.shields.io/github/issues/MissKisser/xiaoxiongmusic-electron-next)](https://github.com/MissKisser/xiaoxiongmusic-electron-next/issues)
 
 **简体中文** | [English](./README.en.md)
 

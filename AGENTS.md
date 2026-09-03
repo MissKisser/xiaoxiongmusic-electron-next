@@ -133,7 +133,7 @@ docs/                    # 上游 VitePress 文档（被 git 跟踪，属于上�
 ## 关键配置文件
 
 - `electron.vite.config.ts`：electron-vite 构建配置（主进程/预加载/渲染进程三目标）
-- `electron-builder.config.ts`：打包配置（appId: `com.imsyy.splayer`，productName: `小熊音乐`，`buildResources: public`，`asarUnpack: public/**`，publish 指向 `MissKisser/xiaoxiongmusic-electron`）
+- `electron-builder.config.ts`：打包配置（appId: `com.imsyy.splayer`，productName: `小熊音乐`，`buildResources: public`，`asarUnpack: public/**`，publish 指向 `MissKisser/xiaoxiongmusic-electron-next`）
 - `package.json`：`name: xiaoxiongmusic`，`desktopName: top.misskisser.XiaoxiongMusic`，更新与仓库字段指向本仓库
 - `tsconfig.json` / `tsconfig.node.json` / `tsconfig.web.json`：TypeScript 配置（分主进程/渲染进程）
 - `dev-app-update.yml`：开发期更新源（指向本仓库）
@@ -168,7 +168,7 @@ docs/                    # 上游 VitePress 文档（被 git 跟踪，属于上�
 
 - 上游为 AGPL-3.0：保留 LICENSE 与上游版权/许可声明；About 页保留对上游的署名（贡献者接口保持指向上游）
 - 品牌替换仅限小熊身份元素
-- 自动更新 feed、repository 字段、更新日志接口一律指向 `MissKisser/xiaoxiongmusic-electron`，绝不允许指向上游
+- 自动更新 feed、repository 字段、更新日志接口一律指向 `MissKisser/xiaoxiongmusic-electron-next`，绝不允许指向上游
 
 ## 注释规范
 

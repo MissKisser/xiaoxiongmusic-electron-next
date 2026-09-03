@@ -107,7 +107,7 @@
 
 如果您对本隐私政策的内容、您的个人信息安全或相关疑问有任何意见、建议或申诉，您可以通过以下方式与开发者取得联系：
 
-- **GitHub 社区 Issue**：[https://github.com/MissKisser/xiaoxiongmusic-electron/issues](https://github.com/MissKisser/xiaoxiongmusic-electron/issues)
+- **GitHub 社区 Issue**：[https://github.com/MissKisser/xiaoxiongmusic-electron-next/issues](https://github.com/MissKisser/xiaoxiongmusic-electron-next/issues)
 - **开发者联系邮箱**：请参阅 GitHub 官方仓库及开发者主页公布的电子邮箱
 
 我们将在收到您的反馈后尽快予以答复。
