@@ -1,24 +1,23 @@
 {
-  "name": "splayer-next",
-  "productName": "SPlayer-Next",
-  "desktopName": "top.imsyy.splayer_next",
+  "name": "xiaoxiongmusic",
+  "productName": "小熊音乐",
+  "desktopName": "top.misskisser.XiaoxiongMusic",
   "version": "1.1.0",
   "description": "Cross-platform desktop music player with rich lyric support and wide audio format compatibility",
   "type": "module",
   "packageManager": "pnpm@11.5.2",
   "main": "./out/main/index.js",
   "author": {
-    "name": "imsyy",
-    "email": "imsyy1024@gmail.com",
-    "url": "https://imsyy.top"
+    "name": "Hackerdallas",
+    "url": "https://github.com/MissKisser/xiaoxiongmusic-electron"
   },
-  "homepage": "https://splayer-next.imsyy.top",
+  "homepage": "https://github.com/MissKisser/xiaoxiongmusic-electron",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SPlayer-Dev/SPlayer-Next"
+    "url": "https://github.com/MissKisser/xiaoxiongmusic-electron"
   },
   "bugs": {
-    "url": "https://github.com/SPlayer-Dev/SPlayer-Next/issues"
+    "url": "https://github.com/MissKisser/xiaoxiongmusic-electron/issues"
   },
   "license": "AGPL-3.0",
   "license-file": "LICENSE",

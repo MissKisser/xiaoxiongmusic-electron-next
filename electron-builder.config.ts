@@ -28,9 +28,9 @@ if (updateChannel !== inferredUpdateChannel) {
 }
 
 const config: Configuration = {
-  appId: "top.imsyy.splayer-next",
-  productName: "SPlayer-Next",
-  copyright: "Copyright © imsyy 2025",
+  appId: "com.imsyy.splayer",
+  productName: "小熊音乐",
+  copyright: "Copyright © Hackerdallas 2023",
   directories: { buildResources: "public" },
   fileAssociations,
   afterPack: "./scripts/after-pack.ts",
@@ -97,7 +97,7 @@ const config: Configuration = {
     },
   ],
   win: {
-    executableName: "SPlayer-Next",
+    executableName: "小熊音乐",
     icon: "public/icons/logo.ico",
     artifactName: "${productName}-${version}-${arch}.${ext}",
     forceCodeSigning: false,
@@ -106,12 +106,12 @@ const config: Configuration = {
   },
   nsis: {
     oneClick: false,
-    guid: "top.imsyy.splayer-next",
+    guid: "com.imsyy.splayer",
     installerIcon: "public/icons/favicon.ico",
     uninstallerIcon: "public/icons/favicon.ico",
     artifactName: "${productName}-${version}-${arch}-setup.${ext}",
-    shortcutName: "SPlayer Next",
-    uninstallDisplayName: "SPlayer Next",
+    shortcutName: "${productName}",
+    uninstallDisplayName: "${productName}",
     createDesktopShortcut: "always",
     allowElevation: true,
     allowToChangeInstallationDirectory: true,
@@ -121,7 +121,7 @@ const config: Configuration = {
     artifactName: "${productName}-${version}-${arch}-portable.${ext}",
   },
   mac: {
-    executableName: "SPlayer-Next",
+    executableName: "小熊音乐",
     icon: "public/icons/icon.icns",
     artifactName: "${productName}-${version}-${arch}.${ext}",
     identity: null,
@@ -145,10 +145,10 @@ const config: Configuration = {
     artifactName: "${productName}-${version}-${arch}.${ext}",
   },
   linux: {
-    executableName: "SPlayer-Next",
+    executableName: "小熊音乐",
     icon: "public/icons/favicon-512x512.png",
     artifactName: "${name}-${version}-${arch}.${ext}",
-    maintainer: "imsyy.top",
+    maintainer: "Hackerdallas",
     category: "Audio;Music;AudioVideo;",
     target: ["AppImage", "deb", "rpm", "tar.gz", "pacman"],
     syncDesktopName: true,
@@ -176,8 +176,8 @@ const config: Configuration = {
   },
   publish: {
     provider: "github",
-    owner: "SPlayer-Dev",
-    repo: "SPlayer-Next",
+    owner: "MissKisser",
+    repo: "xiaoxiongmusic-electron",
     channel: updateChannel,
   },
 };

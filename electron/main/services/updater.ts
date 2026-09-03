@@ -16,7 +16,7 @@ const { autoUpdater } = electronUpdater;
 const canSelfInstall = !isMac && !isPortable && !isAppX;
 
 /** Releases 页 */
-const RELEASES_URL = "https://github.com/SPlayer-Dev/SPlayer-Next/releases";
+const RELEASES_URL = "https://github.com/MissKisser/xiaoxiongmusic-electron/releases";
 
 /** Microsoft Store 更新页 */
 const STORE_UPDATES_URL = "ms-windows-store://updates";

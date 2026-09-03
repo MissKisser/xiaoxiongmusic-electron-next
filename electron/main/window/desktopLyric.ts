@@ -212,7 +212,7 @@ export const createDesktopLyricWindow = (): BrowserWindow => {
     minWidth: MIN_WIDTH,
     minHeight: initialHeight,
     maxHeight: initialHeight,
-    title: "SPlayer-Next - Desktop Lyric",
+    title: "小熊音乐 - 桌面歌词",
     frame: false,
     transparent: true,
     hasShadow: false,
