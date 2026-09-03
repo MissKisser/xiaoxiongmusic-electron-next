@@ -21,6 +21,7 @@ import { registerCloudIpc } from "./cloud";
 import { registerCommentsIpc } from "./comments";
 import { registerAiModelIpc } from "./aiModel";
 import { registerPlaylistIpc } from "./playlist";
+import { registerRemotePlaylistIpc } from "./remotePlaylist";
 import { registerRecognitionIpc } from "./recognition";
 import { registerOpenccIpc } from "./opencc";
 
@@ -42,6 +43,7 @@ export const registerIpcHandlers = (): void => {
   registerThemeIpc();
   registerStreamingIpc();
   registerPlaylistIpc();
+  registerRemotePlaylistIpc();
   registerRecognitionIpc();
   registerLastfmIpc();
   registerCacheIpc();

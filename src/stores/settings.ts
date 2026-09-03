@@ -19,6 +19,10 @@ import type { SystemConfig, LocaleCode } from "@shared/types/settings";
 import { ALL_PLATFORMS } from "@shared/types/platform";
 import { defaultSystemConfig } from "@shared/defaults/settings";
 import { setByPath } from "@shared/utils/path";
+import {
+  DEFAULT_SONG_UNLOCK_SERVERS,
+  type SongUnlockChannel,
+} from "@/services/songUnlock";
 
 /**
  * 对账有序集合：保留存档中仍有效的项（顺序不变），
@@ -96,6 +100,34 @@ const reconcilePlaylistOrder = (stored: unknown): SidebarPlaylistOrder => {
   };
 };
 
+/**
+ * 对账解锁渠道开关：保留存档中仍有效的项（顺序不变），
+ * 末尾补上新增渠道的默认开关，剔除已失效的渠道
+ * @param stored - 存档渠道开关
+ * @returns 对账后的渠道开关
+ */
+const reconcileUnlockChannels = (stored: unknown): SongUnlockChannel[] => {
+  const defaults: Record<string, boolean> = Object.fromEntries(
+    DEFAULT_SONG_UNLOCK_SERVERS.map((s) => [s.key, s.enabled]),
+  );
+  const kept: SongUnlockChannel[] = [];
+  const seen = new Set<string>();
+  if (Array.isArray(stored)) {
+    for (const raw of stored) {
+      const record = raw as Partial<SongUnlockChannel> | null;
+      if (typeof record?.key !== "string" || !(record.key in defaults) || seen.has(record.key)) {
+        continue;
+      }
+      seen.add(record.key);
+      kept.push({ key: record.key, enabled: record.enabled !== false });
+    }
+  }
+  for (const s of DEFAULT_SONG_UNLOCK_SERVERS) {
+    if (!seen.has(s.key)) kept.push({ ...s });
+  }
+  return kept;
+};
+
 export const useSettingsStore = defineStore(
   "settings",
   () => {
@@ -144,6 +176,9 @@ export const useSettingsStore = defineStore(
       reverseSpectrum: false,
       songLevel: "hq",
       allowTrialPlay: false,
+      useSongUnlock: true,
+      songUnlockServer: DEFAULT_SONG_UNLOCK_SERVERS.map((s) => ({ ...s })),
+      useUnlockForDownload: false,
       timeFormat: "current-total",
       showProgressTooltip: true,
       showProgressLyric: false,
@@ -358,9 +393,10 @@ export const useSettingsStore = defineStore(
       storage: localStorage,
       omit: ["system"],
       afterHydrate: ({ store }) => {
-        const { lyric, appearance } = store as unknown as {
+        const { lyric, appearance, player } = store as unknown as {
           lyric: LyricSettings;
           appearance: AppearanceSettings;
+          player: PlayerSettings;
         };
         if (typeof lyric.detectBackgroundLyrics !== "boolean") {
           lyric.detectBackgroundLyrics = true;
@@ -370,6 +406,9 @@ export const useSettingsStore = defineStore(
         appearance.sidebarNavGroups = reconcileNavGroups(appearance.sidebarNavGroups ?? []);
         appearance.sidebarHiddenKeys = reconcileHiddenKeys(appearance.sidebarHiddenKeys ?? []);
         appearance.sidebarPlaylistOrder = reconcilePlaylistOrder(appearance.sidebarPlaylistOrder);
+        if (typeof player.useSongUnlock !== "boolean") player.useSongUnlock = true;
+        if (typeof player.useUnlockForDownload !== "boolean") player.useUnlockForDownload = false;
+        player.songUnlockServer = reconcileUnlockChannels(player.songUnlockServer);
       },
     },
   },

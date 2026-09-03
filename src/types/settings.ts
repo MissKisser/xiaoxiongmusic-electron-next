@@ -4,6 +4,7 @@ import type { Platform } from "@shared/types/platform";
 import { ALL_PLATFORMS } from "@shared/types/platform";
 import type { CjkTransformMode } from "@shared/types/opencc";
 import type { QualityLevel } from "@/utils/quality";
+import type { SongUnlockChannel } from "@/services/songUnlock";
 
 /** 播放器背景类型 */
 export type PlayerBgType = "blur" | "solid" | "animation";
@@ -236,6 +237,12 @@ export interface PlayerSettings {
   songLevel: QualityLevel;
   /** 允许完整音源不可用时播放试听片段 */
   allowTrialPlay: boolean;
+  /** 是否启用灰色歌曲解锁（官方与插件均失败时按优先级尝试解锁渠道） */
+  useSongUnlock: boolean;
+  /** 解锁渠道开关（尝试顺序固定，数组顺序不影响尝试序） */
+  songUnlockServer: SongUnlockChannel[];
+  /** 下载时是否允许使用解锁渠道兜底 */
+  useUnlockForDownload: boolean;
   /** 时间显示格式 */
   timeFormat: TimeFormat;
   /** 显示进度条悬浮信息 */

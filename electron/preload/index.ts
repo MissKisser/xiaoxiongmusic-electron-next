@@ -24,6 +24,7 @@ import type {
   LegacyPlaylistRecord,
   PlaylistCreateInput,
   PlaylistUpdateInput,
+  SaveRemotePlaylistInput,
 } from "@shared/types/playlist";
 import type { CjkTransformMode } from "@shared/types/opencc";
 
@@ -249,6 +250,11 @@ const api = {
     importLegacy: (records: LegacyPlaylistRecord[]) =>
       ipcRenderer.invoke("playlist:importLegacy", records),
     clear: () => ipcRenderer.invoke("playlist:clear"),
+  },
+  remotePlaylist: {
+    save: (input: SaveRemotePlaylistInput) => ipcRenderer.invoke("remote-playlist:save", input),
+    remove: (playlistId: string) => ipcRenderer.invoke("remote-playlist:remove", playlistId),
+    clear: () => ipcRenderer.invoke("remote-playlist:clear"),
   },
   window: {
     // 切换桌面歌词窗口

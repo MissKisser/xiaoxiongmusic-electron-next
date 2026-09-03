@@ -10,6 +10,7 @@ import { resolveQQMusicUrl } from "@/apis/song/qqmusic";
 import { resolveKugouUrl } from "@/apis/song/kugou";
 import { ErrorCode } from "@shared/types/errors";
 import { handleError } from "@/utils/errors";
+import { resolveUnlockUrl, selectUnlockServers } from "@/services/songUnlock";
 
 /** 在线平台 source → 插件 source key */
 const PLATFORM_TO_PLUGIN_SOURCE: Record<Platform, string> = {
@@ -63,7 +64,7 @@ export type OnlineResolveResult =
       ok: true;
       url: string;
       isTrial: boolean;
-      provider: "official" | "plugin" | "trial";
+      provider: "official" | "plugin" | "trial" | "unlock";
       pluginId?: string;
     }
   | { ok: false; errorCode: ErrorCode };
@@ -208,6 +209,14 @@ const resolveOnlineUrl = async (
   }
   const pluginResolved = await resolveByPlugin(track, songLevel, options.skipPluginIds ?? []);
   if (pluginResolved.ok) return pluginResolved;
+  // 灰色歌曲解锁兜底：官方与插件均失败时按优先级尝试解锁渠道（试听之前）
+  if (settings.player.useSongUnlock) {
+    const servers = selectUnlockServers(settings.player.songUnlockServer);
+    if (servers.length > 0) {
+      const unlockResolved = await resolveUnlockUrl(track, servers);
+      if (unlockResolved) return unlockResolved;
+    }
+  }
   if (trialUrl && settings.player.allowTrialPlay) {
     return { ok: true, url: trialUrl, isTrial: true, provider: "trial" };
   }
@@ -224,7 +233,7 @@ const resolveOnlineUrl = async (
 export interface ResolvedTrackSource {
   source: string;
   fromCache: boolean;
-  provider: "local" | "cache" | "streaming" | "official" | "plugin" | "trial";
+  provider: "local" | "cache" | "streaming" | "official" | "plugin" | "trial" | "unlock";
   pluginId?: string;
   cacheRequest?: () => Promise<void>;
 }

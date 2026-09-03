@@ -48,6 +48,12 @@ const downloadCategory: SettingCategory = {
           defaultValue: false,
         },
         {
+          key: "useUnlockForDownload",
+          type: "switch",
+          binding: { store: "settings", path: "player.useUnlockForDownload" },
+          defaultValue: false,
+        },
+        {
           key: "downloadFileTemplate",
           type: "select",
           binding: { store: "settings", path: "system.download.fileTemplate" },

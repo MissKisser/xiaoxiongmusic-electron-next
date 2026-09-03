@@ -8,19 +8,23 @@ import { SIDEBAR_NAV_META, applySavedOrder } from "@/components/layout/sidebarNa
 import { useSettingsStore } from "@/stores/settings";
 import { useStatusStore } from "@/stores/status";
 import { usePlaylistStore } from "@/stores/playlist";
+import { useRemotePlaylistStore } from "@/stores/remotePlaylist";
 import { useUserStore } from "@/stores/user";
 import { useDownloadStore } from "@/stores/download";
 import { useHeartMode } from "@/composables/useHeartMode";
 import { useSettingsDialog } from "@/settings/useSettingsDialog";
+import { toast } from "@/composables/useToast";
 import * as player from "@/core/player";
 import IconLucideListMusic from "~icons/lucide/list-music";
 import IconLucidePlus from "~icons/lucide/plus";
+import IconLucideTrash2 from "~icons/lucide/trash-2";
 import IconLucideChevronDown from "~icons/lucide/chevron-down";
 import IconLucideEyeOff from "~icons/lucide/eye-off";
 import IconLucideSettings2 from "~icons/lucide/settings-2";
 import IconSpHeartMode from "~icons/sp/heart-mode";
 import SButton from "@/components/ui/SButton.vue";
 import SPopselect from "@/components/ui/SPopselect.vue";
+import RemotePlaylistCreateDialog from "@/components/modals/RemotePlaylistCreateDialog.vue";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -28,6 +32,8 @@ const route = useRoute();
 const { appearance, system: systemSettings } = useSettingsStore();
 const status = useStatusStore();
 const playlistStore = usePlaylistStore();
+const remotePlaylistStore = useRemotePlaylistStore();
+const { remotePlaylists } = storeToRefs(remotePlaylistStore);
 const userStore = useUserStore();
 const downloadStore = useDownloadStore();
 const { enterHeartMode } = useHeartMode();
@@ -56,6 +62,67 @@ const handleCreate = (): void => {
 const handleCreated = (playlistId: string, scope: ContentScope): void => {
   status.myPlaylistSource = scope;
   router.push(`/collection/${scope === "local" ? "local" : "netease"}/playlist/${playlistId}`);
+};
+
+/** 远程歌单（WebDAV）路由前缀 */
+const REMOTE_PLAYLIST_PREFIX = "/collection/remote/playlist/";
+
+const remoteCreateOpen = ref(false);
+
+/** 新建远程歌单成功后跳转到该歌单 */
+const handleRemoteCreated = (playlistId: string): void => {
+  router.push(`${REMOTE_PLAYLIST_PREFIX}${playlistId}`);
+};
+
+/** 「远程歌单」分组头部（分组头即新建入口，常驻展示） */
+const renderRemoteHeader = () =>
+  h("div", { class: "flex items-center justify-between gap-2 pl-3 pr-1 min-h-10" }, [
+    h(
+      "span",
+      { class: "text-sm text-on-surface-variant/70" },
+      t("remotePlaylist.title"),
+    ),
+    h(
+      SButton,
+      { variant: "tertiary", size: 26, round: true, onClick: () => (remoteCreateOpen.value = true) },
+      { icon: () => h(IconLucidePlus, { class: "size-3.5" }) },
+    ),
+  ]);
+
+/** 远程歌单列表项 */
+const remotePlaylistItems = computed<SMenuItem[]>(() => {
+  const hidden = hiddenKeys.value;
+  return remotePlaylists.value
+    .map((pl) => ({
+      key: `${REMOTE_PLAYLIST_PREFIX}${pl.id}`,
+      label: pl.name,
+      icon: markRaw(IconLucideListMusic),
+    }))
+    .filter((item) => !hidden.has(item.key));
+});
+
+/** 删除确认 */
+const remoteDeleteOpen = ref(false);
+const pendingRemoteDeleteId = ref<string | null>(null);
+const pendingRemoteDeleteName = computed(
+  () => remotePlaylists.value.find((pl) => pl.id === pendingRemoteDeleteId.value)?.name ?? "",
+);
+const removingRemote = ref(false);
+
+/** 确认删除远程歌单（同步清除主进程中的 WebDAV 配置与密码） */
+const handleConfirmRemoteDelete = async (): Promise<void> => {
+  const id = pendingRemoteDeleteId.value;
+  if (!id || removingRemote.value) return;
+  removingRemote.value = true;
+  try {
+    await remotePlaylistStore.remove(id);
+    toast.success(t("remotePlaylist.deleteSuccess"));
+    if (route.path === `${REMOTE_PLAYLIST_PREFIX}${id}`) router.push("/");
+  } finally {
+    removingRemote.value = false;
+    remoteDeleteOpen.value = false;
+    pendingRemoteDeleteId.value = null;
+  }
 };
 
 /** 我的歌单分组头部 */
@@ -234,6 +301,11 @@ const menuItems = computed<SMenuItem[]>(() => {
     items.push({ key: "subscribed-group", type: "group", render: renderSubscribedHeader });
     items.push(...subscribedItems.value);
   }
+  // 远程歌单分组常驻展示（分组头即新建入口）
+  if (items[items.length - 1]?.type !== "divider")
+    items.push({ key: "divider-remote", type: "divider" });
+  items.push({ key: "remote-playlist-group", type: "group", render: renderRemoteHeader });
+  items.push(...remotePlaylistItems.value);
   return items;
 });
 
@@ -250,7 +322,14 @@ const contextMenuItems = computed<DropdownMenuItem[]>(() => {
   const entry = SIDEBAR_NAV_META[target];
   // 歌单项（/collection/ 前缀）与可隐藏导航项均支持右键隐藏
   const hideable = entry ? entry.hideable : target.startsWith("/collection/");
+  const isRemotePlaylist = target.startsWith(REMOTE_PLAYLIST_PREFIX);
   return [
+    {
+      key: "deleteRemote",
+      label: t("remotePlaylist.delete"),
+      icon: markRaw(IconLucideTrash2),
+      show: isRemotePlaylist,
+    },
     {
       key: "hide",
       label: t("nav.menu.hideFromSidebar"),
@@ -266,6 +345,14 @@ const contextMenuItems = computed<DropdownMenuItem[]>(() => {
 });
 
 const onContextMenuSelect = (key: string): void => {
+  if (key === "deleteRemote") {
+    const target = contextTargetKey.value;
+    if (target.startsWith(REMOTE_PLAYLIST_PREFIX)) {
+      pendingRemoteDeleteId.value = target.slice(REMOTE_PLAYLIST_PREFIX.length);
+      remoteDeleteOpen.value = true;
+    }
+    return;
+  }
   if (key === "hide") {
     const target = contextTargetKey.value;
     if (target && !appearance.sidebarHiddenKeys.includes(target)) {
@@ -326,13 +413,19 @@ const prunePlaylistArchive = (existing: ReadonlySet<string>): void => {
 // 本地歌单加载完成后即可收敛
 // 在线部分仅在已登录且列表非空时清理
 watch(
-  () => [playlistStore.playlists, userStore.isLoggedIn ? userStore.playlists : null] as const,
-  ([localLists, onlineLists]) => {
+  () =>
+    [
+      playlistStore.playlists,
+      userStore.isLoggedIn ? userStore.playlists : null,
+      remotePlaylists.value,
+    ] as const,
+  ([localLists, onlineLists, remoteLists]) => {
     const existing = new Set<string>();
     for (const pl of localLists) existing.add(`/collection/local/playlist/${pl.id}`);
     if (onlineLists && onlineLists.length > 0) {
       for (const pl of onlineLists) existing.add(`/collection/netease/playlist/${pl.id}`);
     }
+    for (const pl of remoteLists) existing.add(`${REMOTE_PLAYLIST_PREFIX}${pl.id}`);
     if (existing.size === 0) return;
     prunePlaylistArchive(existing);
   },
@@ -341,6 +434,7 @@ watch(
 
 onMounted(() => {
   if (!playlistStore.initialized) playlistStore.load();
+  if (!remotePlaylistStore.initialized) remotePlaylistStore.load();
   void downloadStore.init();
 });
 </script>
@@ -372,5 +466,26 @@ onMounted(() => {
       :mode="createMode"
       @created="handleCreated"
     />
+    <!-- 新建远程歌单 -->
+    <RemotePlaylistCreateDialog v-model:open="remoteCreateOpen" @created="handleRemoteCreated" />
+    <!-- 删除远程歌单确认 -->
+    <SDialog v-model:open="remoteDeleteOpen" :title="t('remotePlaylist.deleteTitle')" width="400px">
+      <p class="text-sm text-on-surface-variant">
+        {{ t("remotePlaylist.deleteConfirm", { title: pendingRemoteDeleteName }) }}
+      </p>
+      <template #footer="{ close }">
+        <SButton variant="secondary" :disabled="removingRemote" @click="close">
+          {{ t("common.cancel") }}
+        </SButton>
+        <SButton
+          variant="secondary"
+          type="error"
+          :loading="removingRemote"
+          @click="handleConfirmRemoteDelete"
+        >
+          {{ t("common.confirm") }}
+        </SButton>
+      </template>
+    </SDialog>
   </div>
 </template>

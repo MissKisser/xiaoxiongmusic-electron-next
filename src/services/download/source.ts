@@ -2,7 +2,9 @@ import type { Track } from "@shared/types/player";
 import type { QualityLevel } from "@/utils/quality";
 import { isPlatform } from "@shared/types/platform";
 import { useStreamingStore } from "@/stores/streaming";
+import { useSettingsStore } from "@/stores/settings";
 import { resolveByPlugin } from "@/services/audioSource";
+import { resolveUnlockUrl, selectUnlockServers } from "@/services/songUnlock";
 import { resolveNeteaseDownloadUrl } from "@/apis/song/netease";
 import { resolveQQMusicUrl } from "@/apis/song/qqmusic";
 import { resolveKugouUrl } from "@/apis/song/kugou";
@@ -60,6 +62,14 @@ export const resolveDownloadSource = async (
   if (isPlatform(track.source)) {
     const res = await resolveByPlugin(track, level);
     if (res.ok && !res.isTrial) return { url: res.url };
+  }
+  // 解锁兜底：需开启 player.useUnlockForDownload，与播放链同序尝试
+  if (isPlatform(track.source) && useSettingsStore().player.useUnlockForDownload) {
+    const servers = selectUnlockServers(useSettingsStore().player.songUnlockServer);
+    if (servers.length > 0) {
+      const unlocked = await resolveUnlockUrl(track, servers);
+      if (unlocked) return { url: unlocked.url };
+    }
   }
   return null;
 };

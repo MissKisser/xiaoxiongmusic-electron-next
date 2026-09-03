@@ -1,6 +1,7 @@
 import type { SettingCategory } from "@/types/settings-schema";
 import { useSettingsStore } from "@/stores/settings";
 import DeviceSelector from "@/components/settings/custom/DeviceSelector.vue";
+import SongUnlockServerConfig from "@/components/settings/custom/SongUnlockServerConfig.vue";
 import IconLucidePlay from "~icons/lucide/play";
 
 /** 当前是否为流体背景 */
@@ -79,6 +80,20 @@ const playerCategory: SettingCategory = {
           type: "switch",
           binding: { store: "settings", path: "player.allowTrialPlay" },
           defaultValue: false,
+        },
+        {
+          key: "useSongUnlock",
+          type: "switch",
+          binding: { store: "settings", path: "player.useSongUnlock" },
+          defaultValue: true,
+          children: [
+            {
+              key: "songUnlockServer",
+              type: "custom",
+              component: SongUnlockServerConfig,
+              fullWidth: true,
+            },
+          ],
         },
         {
           key: "preloadNextTrack",

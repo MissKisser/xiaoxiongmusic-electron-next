@@ -2115,6 +2115,23 @@
       "button": "清空全部",
       "confirmTitle": "清空全部数据库缓存？",
       "confirmDesc": "将删除上方全部数据库缓存，操作不可恢复"
+    },
+    "useSongUnlock": {
+      "label": "启用歌曲解锁",
+      "description": "官方音源与插件都失败时，按优先级尝试解锁渠道播放灰色歌曲"
+    },
+    "songUnlockServer": {
+      "label": "解锁渠道",
+      "description": "选择参与解锁的渠道",
+      "hint": "按 网易云 → 波点音乐 → 歌曲宝 → 酷我音乐 的固定顺序尝试，列表顺序不影响尝试序",
+      "netease": "网易云",
+      "bodian": "波点音乐",
+      "gequbao": "歌曲宝",
+      "kuwo": "酷我音乐"
+    },
+    "useUnlockForDownload": {
+      "label": "下载时使用解锁",
+      "description": "官方与插件都无法下载时，尝试用解锁渠道获取下载链接"
     }
   },
   "collection": {
@@ -2390,6 +2407,32 @@
       "requireVersion": "请输入版本号",
       "version": "版本号",
       "versionPlaceholder": "如 3.9"
+    }
+  },
+  "remotePlaylist": {
+    "title": "远程歌单",
+    "create": "新建远程歌单",
+    "name": "歌单名称",
+    "namePlaceholder": "请输入歌单名称",
+    "serverUrl": "WebDAV 服务地址",
+    "serverUrlPlaceholder": "https://dav.example.com",
+    "username": "用户名",
+    "usernamePlaceholder": "WebDAV 用户名（可留空）",
+    "password": "密码",
+    "passwordPlaceholder": "WebDAV 密码（可留空）",
+    "rootPath": "挂载目录",
+    "rootPathPlaceholder": "/ 或 /music",
+    "scanDepth": "扫描深度",
+    "createSuccess": "新建远程歌单成功",
+    "createFailed": "新建远程歌单失败",
+    "delete": "删除远程歌单",
+    "deleteTitle": "删除远程歌单",
+    "deleteConfirm": "确认删除远程歌单「{title}」？主进程中保存的连接密码将一并删除，此操作不可撤销",
+    "deleteSuccess": "已删除远程歌单",
+    "errors": {
+      "nameEmpty": "请输入歌单名称",
+      "urlEmpty": "请输入 WebDAV 服务地址",
+      "urlInvalid": "请输入正确的 http(s) 地址"
     }
   }
 }

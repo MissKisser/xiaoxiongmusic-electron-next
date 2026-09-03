@@ -2115,6 +2115,23 @@
       "button": "Clear All",
       "confirmTitle": "Clear all database caches?",
       "confirmDesc": "All database caches above will be cleared. This cannot be undone."
+    },
+    "useSongUnlock": {
+      "label": "Enable Song Unlock",
+      "description": "Try unlock channels in priority order when both official sources and plugins fail"
+    },
+    "songUnlockServer": {
+      "label": "Unlock Channels",
+      "description": "Select channels participating in song unlock",
+      "hint": "Always tried in fixed order Netease → Bodian → Gequbao → Kuwo; list order does not affect attempt order",
+      "netease": "Netease",
+      "bodian": "Bodian",
+      "gequbao": "Gequbao",
+      "kuwo": "Kuwo"
+    },
+    "useUnlockForDownload": {
+      "label": "Use Unlock for Downloads",
+      "description": "Fall back to unlock channels for download URLs when official sources and plugins fail"
     }
   },
   "collection": {
@@ -2390,6 +2407,32 @@
       "requireVersion": "Please enter a version",
       "version": "Version",
       "versionPlaceholder": "e.g. 3.9"
+    }
+  },
+  "remotePlaylist": {
+    "title": "Remote Playlists",
+    "create": "New Remote Playlist",
+    "name": "Playlist name",
+    "namePlaceholder": "Enter a playlist name",
+    "serverUrl": "WebDAV server URL",
+    "serverUrlPlaceholder": "https://dav.example.com",
+    "username": "Username",
+    "usernamePlaceholder": "WebDAV username (optional)",
+    "password": "Password",
+    "passwordPlaceholder": "WebDAV password (optional)",
+    "rootPath": "Mount path",
+    "rootPathPlaceholder": "/ or /music",
+    "scanDepth": "Scan depth",
+    "createSuccess": "Remote playlist created",
+    "createFailed": "Failed to create remote playlist",
+    "delete": "Delete remote playlist",
+    "deleteTitle": "Delete Remote Playlist",
+    "deleteConfirm": "Delete remote playlist \"{title}\"? The saved connection password will be removed as well. This cannot be undone.",
+    "deleteSuccess": "Remote playlist deleted",
+    "errors": {
+      "nameEmpty": "Please enter a playlist name",
+      "urlEmpty": "Please enter the WebDAV server URL",
+      "urlInvalid": "Please enter a valid http(s) URL"
     }
   }
 }
