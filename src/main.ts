@@ -13,6 +13,7 @@ import { useHotkeyStore } from "./stores/hotkey";
 import { initPlayer, playFiles, restoreLastTrack } from "./core/player";
 import { handleOrpheus } from "./services/orpheus";
 import { installHotkeyManager } from "./core/hotkey/manager";
+import { migrateV3Renderer } from "./services/migration";
 import { vRipple } from "./directives/ripple";
 
 const pinia = createPinia();
@@ -76,7 +77,7 @@ const bootstrapPlayback = async (): Promise<void> => {
 };
 
 // 初始化程序
-router.isReady().then(() => {
+router.isReady().then(async () => {
   // 挂载应用
   app.mount("#app");
   // 计算剩余时间
@@ -85,6 +86,12 @@ router.isReady().then(() => {
   setTimeout(onSplashTimerDone, remaining);
   if (!splashTimerFired) {
     setTimeout(removeSplash, SPLASH_ANIM_MS + 100);
+  }
+  // 3.x → v4 渲染端迁移：幂等，失败只记日志不阻塞启动
+  try {
+    await migrateV3Renderer();
+  } catch (err) {
+    console.error("[migration] 3.x 渲染端迁移失败，已跳过", err);
   }
   // 初始化播放器与冷启动分发
   bootstrapPlayback().catch(console.error);

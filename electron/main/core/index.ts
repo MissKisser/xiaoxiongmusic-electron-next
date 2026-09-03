@@ -15,6 +15,10 @@ import { init as initMedia, shutdown as shutdownMedia } from "@main/services/med
 import { init as initLastfm } from "@main/services/lastfm";
 import { initGlobalHotkey } from "@main/services/globalHotkey";
 import { initDatabase, closeDatabase } from "@main/database";
+import { migrateV3Main } from "@main/migration";
+import { store } from "@main/store";
+import { databaseDir } from "@main/utils/paths";
+import { getCoverCacheDir } from "@main/utils/config";
 import { init as initSongCache } from "@main/services/songCache";
 import { init as initDownload } from "@main/services/downloadManager";
 import { pluginRegistry } from "@main/plugins/registry";
@@ -103,7 +107,7 @@ export const initApp = (): void => {
   // 注册缓存协议方案
   registerCacheScheme();
   // 其他初始化
-  app.whenReady().then(() => {
+  app.whenReady().then(async () => {
     electronApp.setAppUserModelId("com.imsyy.splayer");
     // 注册 cache:// 协议处理
     handleCacheProtocol();
@@ -112,6 +116,17 @@ export const initApp = (): void => {
     });
     // 注册 IPC
     registerIpcHandlers();
+    // 3.x → v4 非破坏性数据迁移：幂等，失败只记日志不阻塞启动
+    try {
+      const result = await migrateV3Main(app.getPath("userData"), {
+        databaseDir,
+        coverDir: getCoverCacheDir(),
+        settingsStore: store,
+      });
+      if (result.migrated) coreLog.info(`3.x 数据迁移完成: ${result.reason}`);
+    } catch (err) {
+      coreLog.warn("3.x 数据迁移失败，已跳过", err);
+    }
     // 初始化数据库
     initDatabase();
     // 创建主窗口
