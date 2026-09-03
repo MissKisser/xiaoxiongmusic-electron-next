@@ -21,9 +21,9 @@ const goHome = (): void => {
       <SLogo :size="30" class="shrink-0" />
       <span
         class="text-[22px] text-primary mt-0.5 leading-10 overflow-hidden whitespace-nowrap font-logo transition-[width,opacity,margin] duration-300"
-        :class="collapsed ? 'w-0 opacity-0 ml-0' : 'w-[90px] ml-2'"
+        :class="collapsed ? 'w-0 opacity-0 ml-0' : 'w-[100px] ml-2'"
       >
-        SPlayer
+        小熊音乐
       </span>
     </div>
   </div>
