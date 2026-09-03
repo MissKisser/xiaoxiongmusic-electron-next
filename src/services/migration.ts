@@ -3,8 +3,8 @@
  *
  * 旧数据位置：
  * - localStorage `setting-store`（pinia persisted JSON，含 useSongUnlock /
- *   songUnlockServer[{key,enabled}] / useUnlockForDownload / enableCustomApi /
- *   customApiBaseUrl）
+ *   songUnlockServer[{key,enabled}] / useUnlockForDownload；enableCustomApi /
+ *   customApiBaseUrl 两键随功能裁撤不迁移）
  * - localforage `music-data`/`music`（playList、historyList、likeSongsList 等）
  * - localforage `user-data`/`user`（userLikeData.*，网易云在线收藏 id）
  * - localforage `local-data`/`local`（local-songs、local-playlists、remote-playlists）
@@ -12,8 +12,6 @@
  * 新数据位置：
  * - 解锁三键 → settings store player.useSongUnlock / player.songUnlockServer /
  *   player.useUnlockForDownload（经 reconcileUnlockChannels 对账，非法渠道丢弃）
- * - customApi 两键 → v4 无对应设置键，写入 localStorage `xiaoxiong_custom_api`
- *   JSON `{ enabled, baseUrl }`（目标已存在则保留，不覆盖）
  * - 本地歌单 → 主进程歌单库（优先经 window.api.playlist.list/importLegacy，
  *   按 id 去重；无 api 时暂存 splayer/playlists 交由既有 migrateLegacy 导入）
  * - 收藏 → splayer/library `liked-ids`（仅 path 可解析到 v4 曲目 id 的本地条目）
@@ -40,9 +38,6 @@ export const V3_RENDERER_VERSION = "1";
 
 /** 渲染端迁移标记键 */
 export const V3_RENDERER_MARK_KEY = "xiaoxiong_migrated_v";
-
-/** customApi 落点键（v4 无对应设置键，独立 JSON 存放） */
-export const V3_CUSTOM_API_KEY = "xiaoxiong_custom_api";
 
 /** 旧 setting-store 允许的解锁渠道键（两边同为 netease/bodian/kuwo/gequbao 字符串） */
 const UNLOCK_CHANNEL_KEYS: readonly SongUnlockServer[] = [
@@ -118,8 +113,6 @@ export interface MigrateV3RendererOptions extends MigrationStorage {
 export interface V3RendererStats {
   /** 是否应用了解锁设置 */
   settingsApplied: boolean;
-  /** 是否写了 customApi 独立键 */
-  customApiWritten: boolean;
   /** 导入的歌单数 */
   playlistsImported: number;
   /** 已存在而跳过的歌单数 */
@@ -288,7 +281,6 @@ const historyKeyOf = (track: Track): string => `${track.source}:${track.id}`;
  */
 const emptyStats = (): V3RendererStats => ({
   settingsApplied: false,
-  customApiWritten: false,
   playlistsImported: 0,
   playlistsSkippedExisting: 0,
   historyImported: 0,
@@ -367,25 +359,6 @@ export const migrateV3Renderer = async (
         }
       }
 
-      // customApi：v4 无对应设置键，独立 JSON 存放；目标已存在则保留不覆盖
-      if ("enableCustomApi" in v3settings || "customApiBaseUrl" in v3settings) {
-        try {
-          if (!getLocalStorage(V3_CUSTOM_API_KEY)) {
-            const customApi = {
-              enabled: v3settings.enableCustomApi === true,
-              baseUrl:
-                typeof v3settings.customApiBaseUrl === "string"
-                  ? v3settings.customApiBaseUrl
-                  : "",
-            };
-            setLocalStorage(V3_CUSTOM_API_KEY, JSON.stringify(customApi));
-            stats.customApiWritten = true;
-            wrote = true;
-          }
-        } catch (err) {
-          console.warn("[migration] 写入 customApi 失败", err);
-        }
-      }
     }
 
     // 本地歌单：local-data/local local-playlists → 主进程歌单库
