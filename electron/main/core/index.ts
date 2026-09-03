@@ -24,6 +24,7 @@ import {
 } from "@main/plugins/playbackBridge";
 import { registerCacheScheme, handleCacheProtocol } from "@main/utils/protocol";
 import { startServer, stopServer } from "@main/server";
+import { startAppServer, stopAppServer } from "@main/appServer";
 import { startMcpServer, stopMcpServer } from "@main/services/mcp/http";
 import { initUpdater, disposeUpdater } from "@main/services/updater";
 import { coreLog, initLogger } from "@main/utils/logger";
@@ -138,6 +139,8 @@ export const initApp = (): void => {
     initGlobalHotkey();
     // 启动外部 API 服务
     void startServer();
+    // 启动内嵌应用服务（含网易云代理、解锁、音频代理、QQ 音乐、播放控制）
+    void startAppServer();
     // 启动 AI 集成 MCP 服务
     void startMcpServer();
     // 初始化自动更新
@@ -167,6 +170,7 @@ export const initApp = (): void => {
     shutdownMedia();
     closeDatabase();
     void stopServer();
+    void stopAppServer();
     void stopMcpServer();
     void pluginRegistry.shutdown();
     disposePlaybackBridge();
