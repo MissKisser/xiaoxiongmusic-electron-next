@@ -10,7 +10,7 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 **平台约束**：v4 起为纯桌面应用（Windows / macOS / Linux），无 Web PWA 构建链路，不涉及 Capacitor / Android / iOS。
 
-**v4 重定型方向（2026-09-03 决策，权威）**：分支 `v4/next-rebase`（worktree `.worktrees/v4-next`）以上游 main 为基线；与上游互斥的变更**以上游为准**（唯一例外：gequbao 解锁渠道保留）；二开仅保留上游无对应的部分（授权 / Admin / server 子模块 / 解锁（含 gequbao）/ WebDAV 远程歌单 / 品牌身份 / 数据迁移；均衡器与设置体系已被上游超集覆盖，不移植）。验收口径：`git diff splayer-next/main v4/next-rebase` 的差异必须恰好落在 KEEP 清单、品牌身份、server 集成、仓库治理四类内。执行方案见 `<main>/docs/architecture/plans/2026-09-03-v4-next-rebase.md`（注：`<main>` 指主仓库根，本工作区为其 `.worktrees/v4-next` 子目录）。
+**项目定位（2026-09-03 重定型，2026-09-04 独立成仓）**：本仓库 main 即 v4 产品线，以上游 `SPlayer-Dev/SPlayer-Next`（remote `splayer-next`）main 为基线；与上游互斥的变更**以上游为准**（唯一例外：gequbao 解锁渠道保留）；二开仅保留上游无对应的部分（授权 / Admin / server 子模块 / 解锁（含 gequbao）/ WebDAV 远程歌单 / 品牌身份 / 数据迁移；均衡器与设置体系已被上游超集覆盖，不移植）。验收口径：`git diff splayer-next/main main` 的差异必须恰好落在 KEEP 清单、品牌身份、server 集成、仓库治理四类内。二开功能地图、上游同步与发布 SOP 等本地文档见 `docs/local/`（经 `.git/info/exclude` 排除，不入库）。同级的 `../xiaoxiongmusic-electron` 为 3.x 存量维护线，两仓独立演进、禁止交叉修改。
 
 ## 常用开发命令
 
@@ -77,6 +77,8 @@ shared/
 └── defaults/settings.ts # defaultSystemConfig 默认值（新增设置键需同步）
 
 docs/                    # 上游 VitePress 文档（被 git 跟踪，属于上游内容，保留勿动）
+docs/local/              # 本项目本地知识库（.git/info/exclude 排除，不入库）：
+                         # 二开功能地图 / 上游同步 SOP / 发布 SOP / 决策记录 / MEMORY 索引
 ```
 
 ### 取源链（`src/services/audioSource.ts` → `resolveOnlineUrl`）
@@ -120,7 +122,7 @@ docs/                    # 上游 VitePress 文档（被 git 跟踪，属于上�
 
 - **禁止主动启动应用**：不得执行 `pnpm dev` / `electron .` / `electron-vite preview` 拉起窗口；验证只靠构建与解包产物
 - **仅允许构建验证**：`pnpm build:unpack` 解包验证产物（`out/`、`dist/`），不开窗口；冒烟只允许对构建产物用 curl 探代理端点
-- **禁止动 `<main>` 工作树**：主仓库根的 3.x 维护线与其未提交改动不属于本工程
+- **禁止跨仓修改**：同级 `../xiaoxiongmusic-electron` 是 3.x 维护线（独立项目），与本仓无共同 git 历史，禁止在此工作流中改动它
 
 ## 开发工作流程（必须遵守）
 
@@ -177,7 +179,6 @@ docs/                    # 上游 VitePress 文档（被 git 跟踪，属于上�
 
 ## 文档规范
 
-1. 除了README.md，所有文档不得进入版本控制，禁止提交到 Git 仓库。
-2. 除了README.md，AGENTS.md，CLAUDE.md，所有文档必须放入项目根目录下的 `docs/` 文件夹中，如果没有该文件夹，请创建。该文件夹下的所有文档必须按照其用途命名且放置在对应的子文件夹中，例如 `docs/api/`、`docs/admin/`、`docs/user/` 等。
-3. `docs/` 文件夹下必须有一个docs.md文件，作为文档总览，介绍整个文档目录的结构。当有新的文档添加时，必须在该docs.md中更新目录结构。
-4. `docs/`豁免清单：根目录 `README.md` ，`AGENTS.md` ，`CLAUDE.md` ，其余文档一律移入 `docs/` 对应子文件夹且不入库，`AGENTS.md` ，`CLAUDE.md`也不得入库。
+1. 本项目文档分两层：上游 VitePress 的 `docs/`（被 git 跟踪，保留勿动）与本地知识库 `docs/local/`（经 `.git/info/exclude` 排除不入库）。**所有新增项目文档一律放入 `docs/local/` 对应子文件**，禁止提交到 Git 仓库。
+2. `docs/local/docs.md` 是本地文档总览索引，新增文档必须同步登记。
+3. 根目录 `README.md` / `README.en.md` 入库；`AGENTS.md` 与 `CLAUDE.md` 随上游惯例入库且互为镜像（修改后必须 `cp AGENTS.md CLAUDE.md`，保证 diff 无差异）。
