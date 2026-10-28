@@ -3,8 +3,12 @@
  * @author Hackerdallas
  */
 
-/** 云端授权服务基地址 */
-export const AUTH_SERVER_URL = "https://music.viaxv.top";
+/**
+ * 云端授权服务基地址
+ * 优先取环境变量 VITE_AUTH_SERVER_URL，未配置时回落到默认自有后端地址
+ */
+export const AUTH_SERVER_URL =
+  import.meta.env.VITE_AUTH_SERVER_URL || "https://music.viaxv.cn";
 
 /** 设备标识本地存档键 */
 const DEVICE_ID_KEY = "xiaoxiong_device_id";
